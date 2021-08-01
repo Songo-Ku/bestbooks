@@ -1,0 +1,9 @@
+{% if authorsList %}
+    <ul>
+    {% for author in authorsList %}
+        <li><a href="{% url 'bestbooks:authors_list'%}/">{{ author.author_fl }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No authors added yet.</p>
+{% endif %}
