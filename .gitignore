@@ -3,7 +3,8 @@
 *.pyc
 *~
 __pycache__
-
+.venv
+venv
 # Env
 .env
 myvenv/
@@ -59,3 +60,39 @@ fabric.properties
 
 # *.iml
 # modules.xml
+
+# IPython Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# dotenv
+.env
+
+# virtualenv
+.venv/
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+
+# Rope project settings
+.ropeproject
+
+# Database stuff
+*.sqlite3
+migrations/
+db.sqlite3
+
+# Atom config file
+.editorconfig
+
+# Other unwanted stuff
+.idea
+.DS_Store
+.DS_STORE

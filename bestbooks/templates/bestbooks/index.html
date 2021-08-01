@@ -1,7 +1,8 @@
-{% if latest_question_list %}
+{% if authors_lists %}
     <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id%}/">{{ question.question_text }}</a></li>
+    {% for author in authors_lists %}
+        <li><a href="{% url 'bestbooks:detail' author.id%}">{{ author.first_name}} {{ author.last_name }}</a></li>
+
     {% endfor %}
     </ul>
 {% else %}
