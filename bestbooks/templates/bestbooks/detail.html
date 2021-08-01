@@ -1,5 +1,41 @@
 <h1>{{ object.first_name}} {{ object.last_name }}</h1>
 
+
+{% if personal_description %}
+    <h2>
+        personal_description:
+    </h2>
+    <ul>
+            <li>
+                {{personal_description.birthday}}
+            </li>
+             <li>
+                {{personal_description.death_day}}
+            </li>
+            <li>
+                {{personal_description.books_written}}
+            </li>
+            <li>
+                <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>
+            </li>
+            <li>
+                {{personal_description.updated}}
+            </li>
+            <li>
+                {{personal_description.height}}
+            </li>
+            <li>
+                {{personal_description.color_eyes}}
+            </li>
+            <li>
+                {{personal_description.color_hairs}}
+            </li>
+            <li>
+                <span> Age: {{person.birthday | timesince}} </span>
+            </li>
+    </ul>
+{% endif %}
+
 {% if books %}
     <h2>
         Books:
@@ -7,7 +43,7 @@
     <ul>
         {% for book in books %}
             <li>
-                {{book.title}}
+                <a href="{% url 'bestbooks:book_detail' book.id%}">{{book.title}}</a>
             </li>
         {% endfor %}
     </ul>

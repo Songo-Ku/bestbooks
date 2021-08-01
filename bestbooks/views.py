@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Author, Book
+from .models import Author, Book, AuthorDescription
 
 
 class IndexView(generic.ListView):
@@ -23,39 +23,54 @@ class DetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context['object'])
         author = context['object']
         print(author.id)
-        print(Book.objects.filter(author__id=author.id))
         context['books'] = Book.objects.filter(author__id=author.id)
+        if author.id:
+            context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
         return context
-    # author.id
-    # self.get_object()
-
-    # def get_queryset(self):
+   # def get_queryset(self):
     #     return Author.objects.filter(id=pk)
 
 
-def results(request, question_id):
-    response = 'you are looking at the results of question %s.'
-    return HttpResponse(response % question_id)
+class Detail_Book_View(generic.DetailView):
+    # template_name_suffix = '_detail'
+    # template_name_field = 'book_detail'
+    model = Author
+    template_name = 'bestbooks/book_detail.html'
+    # Book.objects.filter(pub_date__lte=timezone.now()).exclude(
+    #     choice__choice_text__isnull=True).order_by('-pub_date')[:10]
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     author = context['object']
+    #     print(author.id)
+    #     context['books'] = Book.objects.filter(author__id=author.id)
+    #     if author.id:
+    #         context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
+    #     return context
 
 
-def vote(request, question_id):
-    return HttpResponse('you are voting on question %s.' % question_id)
-
-
-def authors_list(request):
-    authorsList = Author.objects.all()
-    return render(request, 'bestbooks/authors_list.html', {'authorsList': authorsList})
-
-
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[0:5]
-    context = {
-        'latest_question_list': latest_question_list,
-    }
-    return render(request, 'polls/index.html', context)
+# def results(request, question_id):
+#     response = 'you are looking at the results of question %s.'
+#     return HttpResponse(response % question_id)
+#
+#
+# def vote(request, question_id):
+#     return HttpResponse('you are voting on question %s.' % question_id)
+#
+#
+# def authors_list(request):
+#     authorsList = Author.objects.all()
+#     return render(request, 'bestbooks/authors_list.html', {'authorsList': authorsList})
+#
+#
+# def index(request):
+#     latest_question_list = Question.objects.order_by('-pub_date')[0:5]
+#     context = {
+#         'latest_question_list': latest_question_list,
+#     }
+#     return render(request, 'polls/index.html', context)
 
 
 # def detail(request, question_id):
