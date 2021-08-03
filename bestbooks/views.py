@@ -51,11 +51,15 @@ class Detail_Book_View(generic.DetailView):
     #     return context
 
 def mainview(request):
-    books = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
-    print(books)
+    # books = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+    # print(books)
     authors = Author.objects.filter(created__lte=timezone.now()).order_by('-created')[:3]
+    print(f'ksiazki autora: {authors[0].books.all()}')
+    if authors[0].books.all():
+        print('huj')
     print(authors)
-    return render(request, 'bestbooks/main.html', {'books': books, 'authors': authors})
+    # 'books': books,
+    return render(request, 'bestbooks/main.html', { 'authors': authors})
 
 
 # class MainView(generic.ListView):

@@ -23,7 +23,7 @@ class Book(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField('date published')
     # models.IntegerField(default=0)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
 
     def __str__(self):
         return self.title
@@ -43,7 +43,8 @@ class AuthorDescription(models.Model):
         ('blond', 'blond'),
         ('blue', 'blue'),
     )
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='personals')
     birthday = models.DateField(null=True, blank=True)
     death_day = models.DateField(null=True, blank=True)
     books_written = models.CharField(max_length=1, choices=BOOKS_WRITTEN)  # help_text = ''

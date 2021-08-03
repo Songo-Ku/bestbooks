@@ -52,3 +52,13 @@
         No books yet
     </h2>
 {% endif %}
+
+
+<!--        {% if author.books.all %}-->
+<!--        &lt;!&ndash; second way to get books this time dependly from author        &ndash;&gt;-->
+<!--            {% for book_of_author in author.books.all %}-->
+<!--                <li><a href="{% url 'bestbooks:book_detail' book_of_author.id%}">{{ book_of_author.title }}</a></li>-->
+<!--            {% endfor %}-->
+<!--        {% else %}-->
+<!--        No books for author {{ author.first_name }} {{ author.last_name }} are available-->
+<!--        {% endif %}-->
