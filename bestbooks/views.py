@@ -50,14 +50,32 @@ class Detail_Book_View(generic.DetailView):
     #         context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
     #     return context
 
+def mainview(request):
+    books = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+    print(books)
+    authors = Author.objects.filter(created__lte=timezone.now()).order_by('-created')[:3]
+    print(authors)
+    return render(request, 'bestbooks/main.html', {'books': books, 'authors': authors})
 
-class MainView(generic.ListView):
-    template_name = 'bestbooks/main.html'
-    context_object_name = 'authors_and_books'
 
-    def get_queryset(self):
-        return Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+# class MainView(generic.ListView):
+#     template_name = 'bestbooks/main.html'
+#     context_object_name = 'authors_and_books'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['books'] = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+#         context['authors'] = Book.objects.filter(created__lte=timezone.now()).order_by('-created')[:3]
+#         print(context)
+#         return context
 
+    # def get_queryset(self):
+    #     return Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+
+    # def get_context_data(self, *args, **kwargs):
+    #     ctx = super().get_context_data(*args, **kwargs)
+    #     ctx['authors'] = ...
+    #     return ctx
 
 
 

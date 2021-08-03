@@ -1,9 +1,22 @@
-{% if authors_and_books %}
+{% if books %}
     <ul>
-    {% for book in authors_and_books %}
-        <li><a href="{% url 'bestbooks:book_detail' book.id%}">{{ book.title}}</a></li>
+    {% for book in books %}
+        <li><a href="{% url 'bestbooks:book_detail' book.id%}">{{ book.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No books are available.</p>
 {% endif %}
+
+{% if authors %}
+    <ul>
+    {% for author in authors %}
+        <li><a href="{% url 'bestbooks:detail' author.id%}">{{ author.first_name }} {{ author.first_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No authors are available.</p>
+{% endif %}
+<!-- author.book_set.all()-->
+<!-- lub w modelach related_name='books'-->
+<!--author.books.all-->

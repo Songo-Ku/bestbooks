@@ -4,7 +4,7 @@ import datetime
 
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=200)
+    first_name = models.CharField (max_length=200)
     last_name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -15,6 +15,7 @@ class Author(models.Model):
         return self.created >= timezone.now() - datetime.timedelta(days=1)
 
 #      should be here method to response all books per author
+
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
