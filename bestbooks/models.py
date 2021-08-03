@@ -16,6 +16,17 @@ class Author(models.Model):
 
 #      should be here method to response all books per author
 
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+    published_date = models.DateTimeField('date published')
+    # models.IntegerField(default=0)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
 
 class AuthorDescription(models.Model):
     # napisać sygnał gdy dodaje kolejna ksiazke dla autora zeby weryfikował czy books written sie nie powinno zmienić
@@ -42,26 +53,41 @@ class AuthorDescription(models.Model):
     color_eyes = models.CharField(max_length=5, choices=COLORS_PERSONAL, default='unknown')
     color_hairs = models.CharField(max_length=5, choices=COLORS_PERSONAL, default='unknown')
 
-    def calculate_age(self):
-        import datetime
-        return int((datetime.datetime.now() - self.birthday).days / 365.25)
-    age = property(calculate_age)
+    # def calculate_age(self):
+    #     import datetime
+    #     return int((datetime.datetime.now() - self.birthday).days / 365.25)
+    # age = property(calculate_age)
     #     # < span > Age: {{person.age | timesince}} < / span > ciekawostka zeby nie trzeba bylo robic tutaj obliczen
 
     def __str__(self):
         return f'{self.author.first_name} {self.author.last_name} {self.books_written}'
 
 
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=200)
-    created = models.DateTimeField(auto_now_add=True)
-    published_date = models.DateTimeField('date published')
-    # models.IntegerField(default=0)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+class Comment(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    comment_text = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.title
+        return self.comment_text
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # tu chcialbym zrobic model ktory bedzie przyjmowal integer miedzy min i max np. dla wzrostu

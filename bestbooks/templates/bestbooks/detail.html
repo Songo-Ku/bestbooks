@@ -7,31 +7,31 @@
     </h2>
     <ul>
             <li>
-                {{personal_description.birthday}}
+                last update: {{personal_description.updated}}
+            </li>
+            <li>
+                birthday: {{personal_description.birthday}}
             </li>
              <li>
-                {{personal_description.death_day}}
+                death day: {{personal_description.death_day}}
             </li>
             <li>
-                {{personal_description.books_written}}
+                amount books written: {{personal_description.books_written}}
             </li>
             <li>
-                <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>
+                youtube url overviev carrier: <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>
             </li>
             <li>
-                {{personal_description.updated}}
+                height: {{personal_description.height}}
             </li>
             <li>
-                {{personal_description.height}}
+                color eyes: {{personal_description.color_eyes}}
             </li>
             <li>
-                {{personal_description.color_eyes}}
+                color hairs: {{personal_description.color_hairs}}
             </li>
             <li>
-                {{personal_description.color_hairs}}
-            </li>
-            <li>
-                <span> Age: {{person.birthday | timesince}} </span>
+                <span> Age: {{personal_description.birthday|timesince:personal_description.death_day}} </span><br>
             </li>
     </ul>
 {% endif %}

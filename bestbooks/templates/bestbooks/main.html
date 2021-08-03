@@ -1,0 +1,9 @@
+{% if authors_and_books %}
+    <ul>
+    {% for book in authors_and_books %}
+        <li><a href="{% url 'bestbooks:book_detail' book.id%}">{{ book.title}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No books are available.</p>
+{% endif %}

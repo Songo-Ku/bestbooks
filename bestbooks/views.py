@@ -36,7 +36,7 @@ class DetailView(generic.DetailView):
 class Detail_Book_View(generic.DetailView):
     # template_name_suffix = '_detail'
     # template_name_field = 'book_detail'
-    model = Author
+    model = Book
     template_name = 'bestbooks/book_detail.html'
     # Book.objects.filter(pub_date__lte=timezone.now()).exclude(
     #     choice__choice_text__isnull=True).order_by('-pub_date')[:10]
@@ -49,6 +49,31 @@ class Detail_Book_View(generic.DetailView):
     #     if author.id:
     #         context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
     #     return context
+
+
+class MainView(generic.ListView):
+    template_name = 'bestbooks/main.html'
+    context_object_name = 'authors_and_books'
+
+    def get_queryset(self):
+        return Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # def results(request, question_id):
