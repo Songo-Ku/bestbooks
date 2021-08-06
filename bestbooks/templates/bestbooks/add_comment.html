@@ -1,0 +1,24 @@
+{% extends 'bestbooks/base.html' %}
+
+{% block content %}
+    <h1>New comment</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" >Send</button>
+    </form>
+{% endblock %}
+
+
+
+
+<form action="{% url 'bestbooks:comment_view' pk=book.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h1>New Comment for this book:</h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <input type="radio" name="comment" id="" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+
+</fieldset>
+<input type="submit" value="Vote">
+</form>

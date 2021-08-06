@@ -1,22 +1,23 @@
-<!-- first way to get books indepenedent query inside content dictionary -->
-<!--{% if books %}-->
-<!--    <ul>-->
-<!--    {% for book in books %}-->
-<!--        <li><a href="{% url 'bestbooks:book_detail' book.id%}">{{ book.title }}</a></li>-->
-<!--    {% endfor %}-->
-<!--    </ul>-->
-<!--{% else %}-->
-<!--    <p>No books are available.</p>-->
-<!--{% endif %}-->
+{% if last_books %}
+    <h2>Last added books: </h2>
+    <ul>
+    {% for book in last_books %}
+        <li><a href="{% url 'bestbooks:book_detail' book.id%}">{{ book.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Books are not available.</p>
+{% endif %}
 
 {% if authors %}
+    <h2>Last added authors: </h2>
     <ul>
     {% for author in authors %}
         <li><a href="{% url 'bestbooks:detail' author.id%}">{{ author }} </a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No authors are available.</p>
+    <p>Authors are not available.</p>
 {% endif %}
 
 

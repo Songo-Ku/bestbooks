@@ -1,57 +1,57 @@
+{% extends 'bestbooks/base.html' %}
+
 <h1>{{ object.first_name}} {{ object.last_name }}</h1>
-
-
-{% if personal_description %}
-    <h2>
-        personal_description:
-    </h2>
-    <ul>
-            <li>
-                last update: {{personal_description.updated}}
-            </li>
-            <li>
-                birthday: {{personal_description.birthday}}
-            </li>
-             <li>
-                death day: {{personal_description.death_day}}
-            </li>
-            <li>
-                amount books written: {{personal_description.books_written}}
-            </li>
-            <li>
-                youtube url overviev carrier: <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>
-            </li>
-            <li>
-                height: {{personal_description.height}}
-            </li>
-            <li>
-                color eyes: {{personal_description.color_eyes}}
-            </li>
-            <li>
-                color hairs: {{personal_description.color_hairs}}
-            </li>
-            <li>
-                <span> Age: {{personal_description.birthday|timesince:personal_description.death_day}} </span><br>
-            </li>
-    </ul>
+{% if object.personals.all %}
+    {% for personal_description in object.personals.all %}
+        <h2>
+            personal_description:
+        </h2>
+        <ul>
+                <li>
+                    last update: {{personal_description.updated}}
+                </li>
+                <li>
+                    birthday: {{personal_description.birthday}}
+                    This will not be escaped: {{ personal_description.birthday|safe }}
+                </li>
+                 <li>
+                    death day: {{personal_description.death_day}}
+                </li>
+                <li>
+                    amount books written: {{personal_description.books_written}}
+                </li>
+                <li>
+                    youtube url overviev carrier: <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>
+                </li>
+                <li>
+                    height: {{personal_description.height}}
+                </li>
+                <li>
+                    color eyes: {{personal_description.color_eyes}}
+                </li>
+                <li>
+                    color hairs: {{ personal_description.color_hairs }}
+                </li>
+                <li>
+                    <span> Age: {{ personal_description.birthday|timesince:personal_description.death_day }} </span><br>
+                    option 2:
+                    <span> Age: {{ personal_description.calculate_age }} </span><br>
+                    option from property:
+                    <span> Age: {{ personal_description.age }} </span><br>
+                </li>
+                <li>
+                    is alive: {{ personal_description.is_alive }}
+                </li>
+        </ul>
+    {% endfor %}
 {% endif %}
 
-{% if books %}
-    <h2>
-        Books:
-    </h2>
-    <ul>
-        {% for book in books %}
-            <li>
-                <a href="{% url 'bestbooks:book_detail' book.id%}">{{book.title}}</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h2>
-        No books yet
-    </h2>
-{% endif %}
+
+
+
+
+
+
 
 
 <!--        {% if author.books.all %}-->
@@ -62,3 +62,62 @@
 <!--        {% else %}-->
 <!--        No books for author {{ author.first_name }} {{ author.last_name }} are available-->
 <!--        {% endif %}-->
+
+
+
+
+
+
+<!--{% if personal_description %}-->
+<!--    <h2>-->
+<!--        personal_description:-->
+<!--    </h2>-->
+<!--    <ul>-->
+<!--            <li>-->
+<!--                last update: {{personal_description.updated}}-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                birthday: {{personal_description.birthday}}-->
+<!--            </li>-->
+<!--             <li>-->
+<!--                death day: {{personal_description.death_day}}-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                amount books written: {{personal_description.books_written}}-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                youtube url overviev carrier: <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                height: {{personal_description.height}}-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                color eyes: {{personal_description.color_eyes}}-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                color hairs: {{personal_description.color_hairs}}-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <span> Age: {{personal_description.birthday|timesince:personal_description.death_day}} </span><br>-->
+<!--            </li>-->
+<!--    </ul>-->
+<!--{% endif %}-->
+
+<!--{% if books %}-->
+<!--    <h2>-->
+<!--        Books:-->
+<!--    </h2>-->
+<!--    <ul>-->
+<!--        {% for book in books %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'bestbooks:book_detail' book.id%}">{{book.title}}</a>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--{% else %}-->
+<!--    <h2>-->
+<!--        No books yet-->
+<!--    </h2>-->
+<!--{% endif %}-->
+
+

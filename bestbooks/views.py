@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import (render, get_object_or_404, redirect,)
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
 from .models import Author, Book, AuthorDescription
+from .forms import BookForm, CommentForm
+from django.contrib.auth.decorators import login_required
 
 
 class IndexView(generic.ListView):
@@ -15,29 +17,69 @@ class IndexView(generic.ListView):
         return Author.objects.all()
 
 
-class DetailView(generic.DetailView):
-    model = Author
-    template_name = 'bestbooks/detail.html'
-    # Book.objects.filter(pub_date__lte=timezone.now()).exclude(
-    #     choice__choice_text__isnull=True).order_by('-pub_date')[:10]
+def mainview(request):
+    last_books = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+    authors = Author.objects.filter(created__lte=timezone.now()).order_by('-created')[:3]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        author = context['object']
-        print(author.id)
-        context['books'] = Book.objects.filter(author__id=author.id)
-        if author.id:
-            context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
-        return context
-   # def get_queryset(self):
-    #     return Author.objects.filter(id=pk)
+    if authors:
+
+        print(f'ksiazki autora: {authors[0].books.all()}')
+    # if not authors and not last_books:
+        # redirect to
+    # 'books': books,
+    return render(request, 'bestbooks/main.html', {'authors': authors,'last_books': last_books})
 
 
-class Detail_Book_View(generic.DetailView):
-    # template_name_suffix = '_detail'
-    # template_name_field = 'book_detail'
-    model = Book
-    template_name = 'bestbooks/book_detail.html'
+def detailview(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    return render(request, 'bestbooks/detail.html', {'object': author})
+
+
+def detail_book_view(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, 'bestbooks/book_detail.html', {'book': book})
+
+
+def comment_view(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, 'bestbooks/comment_view.html', {'object': book})
+
+
+@login_required
+def book_new(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.added_by = request.user
+            # post.published_date = timezone.now()
+            book.save()
+            return redirect('book_detail', pk=book.pk)
+    else:
+        form = BookForm()
+    return render(request, 'blog/book_edit.html', {'form': form})
+
+
+@login_required
+def book_edit(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.added_by = request.user
+            # post.published_date = timezone.now()
+            book.save()
+            return redirect('book_detail', pk=book.pk)
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+
+
+# class DetailView(generic.DetailView):
+#     model = Author
+#     template_name = 'bestbooks/detail.html'
     # Book.objects.filter(pub_date__lte=timezone.now()).exclude(
     #     choice__choice_text__isnull=True).order_by('-pub_date')[:10]
 
@@ -49,17 +91,26 @@ class Detail_Book_View(generic.DetailView):
     #     if author.id:
     #         context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
     #     return context
+   # def get_queryset(self):
+    #     return Author.objects.filter(id=pk)
 
-def mainview(request):
-    # books = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
-    # print(books)
-    authors = Author.objects.filter(created__lte=timezone.now()).order_by('-created')[:3]
-    print(f'ksiazki autora: {authors[0].books.all()}')
-    if authors[0].books.all():
-        print('huj')
-    print(authors)
-    # 'books': books,
-    return render(request, 'bestbooks/main.html', { 'authors': authors})
+
+# class Detail_Book_View(generic.DetailView):
+#     # template_name_suffix = '_detail'
+#     # template_name_field = 'book_detail'
+#     model = Book
+#     template_name = 'bestbooks/book_detail.html'
+    # Book.objects.filter(pub_date__lte=timezone.now()).exclude(
+    #     choice__choice_text__isnull=True).order_by('-pub_date')[:10]
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     author = context['object']
+    #     print(author.id)
+    #     context['books'] = Book.objects.filter(author__id=author.id)
+    #     if author.id:
+    #         context['personal_description'] = AuthorDescription.objects.get(author__id=author.id)
+    #     return context
 
 
 # class MainView(generic.ListView):
@@ -80,19 +131,6 @@ def mainview(request):
     #     ctx = super().get_context_data(*args, **kwargs)
     #     ctx['authors'] = ...
     #     return ctx
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

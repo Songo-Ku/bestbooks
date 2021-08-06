@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 import datetime
 
 
@@ -7,6 +8,7 @@ class Author(models.Model):
     first_name = models.CharField (max_length=200)
     last_name = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -18,12 +20,14 @@ class Author(models.Model):
 
 
 class Book(models.Model):
+    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField('date published')
     # models.IntegerField(default=0)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
+    author = models.ForeignKey('bestbooks.Author', on_delete=models.CASCADE, related_name='books')
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -55,10 +59,18 @@ class AuthorDescription(models.Model):
     color_eyes = models.CharField(max_length=5, choices=COLORS_PERSONAL, default='unknown')
     color_hairs = models.CharField(max_length=5, choices=COLORS_PERSONAL, default='unknown')
 
-    # def calculate_age(self):
-    #     import datetime
-    #     return int((datetime.datetime.now() - self.birthday).days / 365.25)
-    # age = property(calculate_age)
+    def calculate_age(self):
+        import datetime
+        if self.death_day:
+            return int((self.death_day - self.birthday).days / 365.25)
+        # print(int((datetime.date.today() - self.birthday).days / 365.25))
+        return int((datetime.date.today() - self.birthday).days / 365.25)
+
+    def is_alive(self):
+        if self.death_day:
+            return False
+        return True
+    age = property(calculate_age)
     #     # < span > Age: {{person.age | timesince}} < / span > ciekawostka zeby nie trzeba bylo robic tutaj obliczen
 
     def __str__(self):
@@ -66,8 +78,15 @@ class AuthorDescription(models.Model):
 
 
 class Comment(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
     comment_text = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    # approved_comment = models.BooleanField(default=False)
+    #
+    # def approve(self):
+    #     self.approved_comment = True
+    #     self.save()
 
     def __str__(self):
         return self.comment_text

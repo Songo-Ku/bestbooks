@@ -1,41 +1,25 @@
-<h1>title: {{ object.title }} </h1>
-<h1>description: {{ object.description }} </h1>
-<h1>published_date: {{ object.published_date }} </h1>
-<h1>author: {{ object.author }} </h1>
+{% extends 'bestbooks/base.html' %}
 
-<!--{% if personal_description %}-->
-<!--    <h2>-->
-<!--        personal_description:-->
-<!--    </h2>-->
-<!--    <ul>-->
-<!--            <li>-->
-<!--                {{personal_description.birthday}}-->
-<!--            </li>-->
-<!--             <li>-->
-<!--                {{personal_description.death_day}}-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                {{personal_description.books_written}}-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a href="{{personal_description.youtube_url}}">link to quick carrier overview</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                {{personal_description.updated}}-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                {{personal_description.height}}-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                {{personal_description.color_eyes}}-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                {{personal_description.color_hairs}}-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <span> Age: {{person.birthday | timesince}} </span>-->
-<!--            </li>-->
-<!--    </ul>-->
-<!--{% endif %}-->
+
+<h1>title: {{ book.title }} </h1>
+<h1>description: {{ book.description }} </h1>
+<h1>published_date: {{ book.published_date }} </h1>
+<h1>author: {{ book.author }} </h1>
+
+
+{% if book.comments.all  %}
+    <h2>
+        Comments:
+    </h2>
+    {% for comment in book.comments.all  %}
+        <ul>
+            <li>
+                {{ comment.comment_text }}
+            </li>
+        </ul>
+    {% endfor %}
+{% else %}
+    <h5>No comments yet.</h5>
+{% endif %}
 
 

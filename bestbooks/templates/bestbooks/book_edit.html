@@ -1,0 +1,13 @@
+{% extends 'bestbooks/base.html' %}
+
+{% block content %}
+
+    <h2>New book/edit</h2>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form }}
+
+        <button type="submit" class="save btn btn-default"> Save </button>
+    </form>
+
+{% endblock %}
