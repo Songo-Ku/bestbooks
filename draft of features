@@ -1,0 +1,72 @@
+BestBooks - aplikacja z najlepszymi książkami
+co my chcemy właściwie zrobić?
+1. środowsiko wirtualne
+2. instalacja django
+3. stworzenie projektu (test: odpalenie pustego projetku: ./manage.py runserver 127.0.0.1:8000)
+4. stworzenie aplikacji
+5. stworzenie modelu, np. Author
+6. podłączenie bazy danych (SQLight)
+7. makemigrations & migrate
+8. django model admin dla modelu Author
+9. stworzenie superusera (createsuperuser)
+10. dodanie nowego autora z panelu admina
+11. to samo co z Author ale dla Book
+12. pierwszy widok: lista wszystkich Authors
+dwa modele:
+1. Author
+2. Book
+Dodawanie kolejnych instancji Book i Author przez panel admina
+widoki:
+1. Strona "Wszyscy autorzy"
+ - wylistowani wszyscy autorzy, każdy z nich jest linkiem do własnej strony "Autor"
+2. Strona "Autor" z listą wszystkich jego/jej książek
+ - szczegółowe informacje o autorce/autorze
+ - lista wszystkich książek, każda będąca linkiem do strony "Książka"
+3. Strona "Książka" ze szczegółowymi informacjami o książce
+*Dodatkowe:
+1. Strona głowna
+ - 3 ostatnio dodanych autorów (każdy jest linkiem)
+ - 3 ostatnio dodane książki (każda jest linkiem)
+Zajęcia 3
+Formularze i widoki klasowe/generyczne
+Czyli jak zwykły user może dodać coś do bazy oraz jak pisać mniej kodu
+1. Możliwość komentowania książek
+ - nowy model do trzymania komentarza
+ - formularz do wpisywania komentarza (osobny widok)
+ - wszystkie komentarze widoczne na stronie danej książki
+2. Możliwość komentowania autora
+ j/w
+Widoki generyczne, czyli Django jako fully automated luxury kombajn
+CRUD
+1. Przepiszmy widok "Wszyscy autorzy" na widok klasowy
+2. Przepiszmy widok "Autor" na widok klasowy
+3. Przepiszmy widok "Książka" na widok klasowy
+*4. Przepiszmy widok "Strona główna" na widok klasowy
+*5. Przepiszmy widok "Dodaj komentarz" na widok klasowy
+Zajecia 4
+Wielka synteza, czyli formularze jako klasy
+Formularz na podstawie klasy
+zadanie:
+Widok do wysyłki maila do autora na podstawie formualrza opartego na klasie
+1. user może wysłać maila do wybrangeo autora
+2. mail autora to jego {first_name}_{last_name}@bestbooks.pl
+3, po wysłaniu maila user widzi stronę o trście "Twój mail został wysłany"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+send_mail()
+Zajęcia 5
+Kończymy to co poprzednio
+logowanie/rejestracja/restrykcja treści
+cel: tylko zalogowany user może wysłać maila do autora
+do domu:
+1. rejestracja usera (login, maila, dwa razy hasło; *sprawdzamy czy dwa hasła są zgodne)
+2. wylogowywanie (tylko dla zalogowanych)
+3. tylko niezalogowany user może się zalogować
+Zajęcia 6
+Formularz do wyszukiwania i metoda filter()
+lookupy (gte, year, contains)
+do domu:
+Zrobić wyszukiwarkę do BookLists (po polach autora, ale też po własnych)
+Zajęcia 7
+Niech na każdej stronie będzie aktualna prognoza pogody dla Warszawy
+Zajęcia 8
+Testy!
