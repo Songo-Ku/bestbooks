@@ -1,5 +1,7 @@
 {% extends 'bestbooks/base.html' %}
 
+
+{% block content %}
 <h1>{{ object.first_name}} {{ object.last_name }}</h1>
 {% if object.personals.all %}
     {% for personal_description in object.personals.all %}
@@ -45,8 +47,7 @@
         </ul>
     {% endfor %}
 {% endif %}
-
-
+{% endblock %}
 
 
 

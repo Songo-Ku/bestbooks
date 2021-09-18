@@ -1,6 +1,9 @@
 {% extends 'bestbooks/base.html' %}
 
+{% block content %}
+Hello, {{ user.username|default:'Guest' }}!
 {% if authors_lists %}
+    <h2>Autors list's</h2>
     <ul>
     {% for author in authors_lists %}
         <li><a href="{% url 'bestbooks:detail' author.id%}">{{ author.first_name}} {{ author.last_name }}</a></li>
@@ -10,3 +13,5 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+{% endblock %}

@@ -14,8 +14,8 @@ urlpatterns = [
     path('book/new/', views.book_new, name='book_new'),
     path('book/<int:pk>/edit/', views.book_edit, name='book_edit'),
 
-    # path('<int:pk>/book/comment/add', views.add_comment_view, name='add_comment'),
-    # path('<int:pk>/book/comment/edit', views.edit_comment_view, name='edit_comment'),
+    path('<int:pk>/book/comment/add', views.add_comment_view, name='add_comment'),
+    path('<int:pk>/book/comment/edit', views.edit_comment_view, name='edit_comment'),
 
     # path('<int:question_id>/results/', views.results, name='results'),
     # path('<int:question_id>/vote/', views.vote, name='vote'),

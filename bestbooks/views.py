@@ -44,6 +44,8 @@ def comment_view(request, pk):
     book = get_object_or_404(Book, pk=pk)
     return render(request, 'bestbooks/comment_view.html', {'object': book})
 
+def add_comment_view(request):
+
 
 @login_required
 def book_new(request):

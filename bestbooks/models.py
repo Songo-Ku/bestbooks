@@ -13,9 +13,6 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
-    def was_published_recently(self):
-        return self.created >= timezone.now() - datetime.timedelta(days=1)
-
 #      should be here method to response all books per author
 
 
@@ -31,6 +28,9 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def was_published_recently(self):
+        return self.created >= timezone.now() - datetime.timedelta(days=1)
 
 
 class AuthorDescription(models.Model):
@@ -59,6 +59,9 @@ class AuthorDescription(models.Model):
     color_eyes = models.CharField(max_length=5, choices=COLORS_PERSONAL, default='unknown')
     color_hairs = models.CharField(max_length=5, choices=COLORS_PERSONAL, default='unknown')
 
+    def __str__(self):
+        return f'{self.author.first_name} {self.author.last_name} - scale books written: {self.books_written}'
+
     def calculate_age(self):
         import datetime
         if self.death_day:
@@ -72,9 +75,6 @@ class AuthorDescription(models.Model):
         return True
     age = property(calculate_age)
     #     # < span > Age: {{person.age | timesince}} < / span > ciekawostka zeby nie trzeba bylo robic tutaj obliczen
-
-    def __str__(self):
-        return f'{self.author.first_name} {self.author.last_name} {self.books_written}'
 
 
 class Comment(models.Model):

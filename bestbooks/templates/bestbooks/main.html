@@ -1,3 +1,7 @@
+{% extends 'bestbooks/base.html' %}
+
+{% block content %}
+
 {% if last_books %}
     <h2>Last added books: </h2>
     <ul>
@@ -19,7 +23,7 @@
 {% else %}
     <p>Authors are not available.</p>
 {% endif %}
-
+{% endblock %}
 
 
 <!-- author.book_set.all()-->
