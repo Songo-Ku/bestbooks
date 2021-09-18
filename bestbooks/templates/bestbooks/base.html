@@ -20,9 +20,11 @@
                     <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
 
                 {% else %}
-                    <a href="{% url 'login' %}" class="top-menu"> loguj sie <span class="glyphicon glyphicon-lock"></span></a>
+                    <a
+                        href="{% url 'login' %}" class="top-menu"> loguj sie {% include './icons/file-earmark-plus.svg' %}
+                    </a>
                 {% endif %}
-              <h1><a href="bestbooks/">Bestbooks </a></h1>
+              <h1><a href="{% url 'bestbooks:index' %}">Bestbooks </a></h1>
           </div>
         </header>
         <main class="container">
